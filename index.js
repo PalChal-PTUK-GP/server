@@ -3,27 +3,11 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
-
-import PaymentsRoute from './routes/payments.js'
-import UsersRoute from './routes/users.js'
-import ReservationRoute from './routes/reservations.js'
-import PropertiesRoute from './routes/properties.js'
-import AuthRoute from './routes/auth.js'
-import citiesRoute from './routes/cities.js'
-import regionsRoute from './routes/regions.js'
-import amenitiesRoute from './routes/amenities.js'
-import reviewsRoute from './routes/reviews.js'
-import WishListRoute from './routes/wishlist.js'
-import MessagesRoute from './routes/messages.js'
-import ConversationsRoute from './routes/conversations.js'
-import NotificationRoute from './routes/notifications.js'
-import ReportsRoute from './routes/reports.js'
-import HostRequestsRoute from './routes/hostRequests.js'
-import adminRoute from './routes/admin.js'
 import { writeLog } from './utils/logs.js'
 import jwt from 'jsonwebtoken'
 import http from 'http'
 import { initSocketIO } from './utils/socketIO.js'
+import { initRoutes } from './routes/index.js'
 
 const app = express();
 
@@ -64,40 +48,22 @@ app.use(cookieParser());
 app.use("/images", express.static(`${uploadDir}/images/`)); // allow access to the uploads folder
 
 // Logging middleware - Ready Just uncomment to use
-app.use((req, res, next) => {
-    // try {
-    //     const token = req.cookies.login_session || req.headers.authorization?.split(" ")[1];
-    //     const user = jwt.verify(token, process.env.JWT_SECRET);
+// app.use((req, res, next) => {
+//     try {
+//         const token = req.cookies.login_session || req.headers.authorization?.split(" ")[1];
+//         const user = jwt.verify(token, process.env.JWT_SECRET);
 
-    //     writeLog(`${req.method} ${req.originalUrl} - IP: ${req.ip} - User: ${user.id} - Role: ${user.role}`);
-    // } catch (err) {
-    //     writeLog(`${req.method} ${req.originalUrl} - ${req.ip} - User: Guest`);
-    // } finally {
-    //     next();
-    // }
-})
+//         writeLog(`${req.method} ${req.originalUrl} - IP: ${req.ip} - User: ${user.id} - Role: ${user.role}`);
+//     } catch (err) {
+//         writeLog(`${req.method} ${req.originalUrl} - ${req.ip} - User: Guest`);
+//     } finally {
+//         next();
+//     }
+// })
 
 //routers middleware
-app.use('/api/users', UsersRoute);
-app.use('/api/properties', PropertiesRoute);
+initRoutes(app);
 
-app.use('/api/cities', citiesRoute);
-app.use('/api/regions', regionsRoute);
-app.use('/api/amenities', amenitiesRoute);
-app.use('/api/reviews', reviewsRoute);
-app.use('/api/wishlist', WishListRoute);
-
-app.use('/api/payments', PaymentsRoute);
-app.use('/api/reservations', ReservationRoute);
-app.use("/api/auth", AuthRoute);
-
-app.use('/api/messages', MessagesRoute);
-app.use('/api/conversations', ConversationsRoute);
-app.use('/api/notifications', NotificationRoute);
-
-app.use("/api/reports", ReportsRoute);
-app.use('/api/hostRequests', HostRequestsRoute);
-app.use('/api/admin', adminRoute);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
