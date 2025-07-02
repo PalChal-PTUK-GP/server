@@ -1,0 +1,2138 @@
+{
+	"info": {
+		"_postman_id": "778116af-8693-4403-a348-2fdaeea5ce79",
+		"name": "Chalet_Booking_System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33068396"
+	},
+	"item": [
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "Host Dashboard Overview",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/reports/host/dashboard/overview",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"reports",
+								"host",
+								"dashboard",
+								"overview"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Conversations",
+			"item": [
+				{
+					"name": "Create New Conversation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has the required fields - message and status\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.message).to.exist;\r",
+									"    pm.expect(responseData.status).to.exist;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Message is a non-empty string\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status is a non-negative integer\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.status).to.exist.and.to.be.a('number');\r",
+									"    pm.expect(responseData.status).to.be.at.least(0, \"Status should be a non-negative integer\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// empty conv 67fa3627a473771c5be360d3 // not empty 67fa39fb4fe78965d48ef773",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_URL}}/conversations/67fa3627a473771c5be360d3",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"conversations",
+								"67fa3627a473771c5be360d3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Conversations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/conversations/",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"conversations",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Conversation by contactId(userId-other party)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/conversations/single/67ea73d0ad6967d57dd47879",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"conversations",
+								"single",
+								"67ea73d0ad6967d57dd47879"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Messages",
+			"item": [
+				{
+					"name": "Create New Message ( Send Message )",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"conversationId\": \"680d1c287c873b4fc7106136\",\r\n    \"text\": \"die2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_URL}}/messages/",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"messages",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get A Conversation Messages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/messages/680d1c287c873b4fc7106136/all?page=2&limit=5",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"messages",
+								"680d1c287c873b4fc7106136",
+								"all"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set A Message as Seen",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/messages/680d3e1b75e5c00d18e8d581/seen",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"messages",
+								"680d3e1b75e5c00d18e8d581",
+								"seen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unseen Messages Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/messages/unseenCount",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"messages",
+								"unseenCount"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payments",
+			"item": [
+				{
+					"name": "CreateIntent",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"propertyId\":\"680a76dd9a1dcfb68dc4fed0\",\r\n    \"startDate\": \"2026-5-4\",\r\n    \"endDate\":\"2026-5-5\"\r\n}\r\n\r\n// 6809f50d393ad0886d0603e1 2026-2-10 to 2026-2-15",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_URL}}/payments/create-payment-intent",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"payments",
+								"create-payment-intent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test WebHook",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/payments/webhook",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"payments",
+								"webhook"
+							]
+						},
+						"description": "This Endpoint is only accessible by the stripe website using stirpe_webhook_secret_KEY"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payment Intent Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/payments/pi_3RACVFEZriYfq80U1JoYvUv6",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"payments",
+								"pi_3RACVFEZriYfq80U1JoYvUv6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Payment Intent",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"reservationId\": \"67f0109fc08ee53675d342ad\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_URL}}/payments/cancel",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"payments",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete A Request In Case The User Didn't Complete The Payment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/payments/reservationId",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"payments",
+								"reservationId"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "availableDatesTest",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/payments/availbleDates/683e227793e1baed4bded3bf",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"payments",
+								"availbleDates",
+								"683e227793e1baed4bded3bf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payment Details (Admin Only)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/payments/info/pi_3RVzIOEZriYfq80U0qT2WFqi",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"payments",
+								"info",
+								"pi_3RVzIOEZriYfq80U0qT2WFqi"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservations",
+			"item": [
+				{
+					"name": "Get Single Reservation Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/reservations/6818c7a69a1d8e59fe77e775",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"reservations",
+								"6818c7a69a1d8e59fe77e775"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Reservations for a property only By Owner or Admin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/reservations/680b8dcb9ca773628387f708/all",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"reservations",
+								"680b8dcb9ca773628387f708",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mark A Reservation As Finished",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/reservations/680cbf417602ddeb9ec77a7b/finished",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"reservations",
+								"680cbf417602ddeb9ec77a7b",
+								"finished"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All User Reservations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/reservations/",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"reservations",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incoming Reservations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/reservations/host/incoming",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"reservations",
+								"host",
+								"incoming"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Reservations (By Admin) with all states",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/reservations/all/admin",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"reservations",
+								"all",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Reservation (Admin Only)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userPoints\": 100,\r\n    \"hostPoints\": 100,\r\n    \"status\": \"finished\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_URL}}/reservations/:id",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"reservations",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Update User Image",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "profilePicture",
+									"type": "file",
+									"src": "/D:/ارشيف الهاتف/ارشيف صور تونس/تونس الفترة الوسطى/IMG-20240826-WA0034.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_URL}}/users/profilePicture",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"users",
+								"profilePicture"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Become A Host Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/users/becomeHost",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"users",
+								"becomeHost"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Host Request if Exists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/users/hostRequest",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"users",
+								"hostRequest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel A Request (Delete)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/users/hostRequest/reqId",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"users",
+								"hostRequest",
+								"reqId"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Info (Settings)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"New Full Name\",\r\n    \"email\": \"New Email\",\r\n    \"mobile\": \"New Mobile Number\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_URL}}/users/profile",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Info (Admin Only)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"name\",\r\n    \"fullName\":\"fullName\",\r\n    \"email\":\"email\",\r\n    \"mobile\": \"mobile\",\r\n    \"countryCode\":\"972\",\r\n    \"totalRewardPoints\":1000,\r\n    \"subscripedToNewsLetter\":true,\r\n    \"Role\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_URL}}/users/updateUser/1234adf23",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"users",
+								"updateUser",
+								"1234adf23"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users (Admin Only)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/users/all/",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"users",
+								"all",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle User Suspension (Admin only)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/users/toggleSuspension/userId",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"users",
+								"toggleSuspension",
+								"userId"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "User Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"o.mensi3\",\r\n    \"fullName\":\"Omar Mensi\",\r\n    \"email\": \"safwat.suliman.20023@gmail.com\",\r\n    \"mobile\":\"0598367983\",\r\n    \"address\":{ // no need just extra data to test how backend will ignore it\r\n        \"city\":\"Tulkarm\",\r\n        \"region\": \"Kadoon Street\"\r\n    },\r\n    \"password\": \"A00000000@a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_URL}}/auth/register",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\r\n//     \"username\":\"o.mensi\",\r\n//     \"password\":\"O00000000@o\"\r\n// }\r\n\r\n{\r\n    \"username\":\"ssuliman2\",\r\n    \"password\":\"Safwat@2002\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_URL}}/auth/login",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/auth/logout",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forget Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"safwat.suliman.20023@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_URL}}/auth/forgetPassword",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"auth",
+								"forgetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set New Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRlIjoxNzQ0ODExNzY3MTk5LCJpZCI6IjY3ZmMyMTk5NGY2NTdmZGQ4YjZkZWEzZiIsImVtYWlsIjoic2Fmd2F0LnN1bGltYW4uMjAwMjNAZ21haWwuY29tIiwiaWF0IjoxNzQ0ODExNzY3LCJleHAiOjE3NDQ4MTUzNjd9.nUx4bOTFQVEU2eFb6co7IUGIy7ROfZdd_bwwCK70xgM\",\r\n    \"password\": \"A00000000@a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_URL}}/auth/resetPassword",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"auth",
+								"resetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check A Token Sent By Email For Validity to Change the Password In Order To Check the link before showing the change password form in front end",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/auth/isActiveToken/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRlIjoxNzQzOTc3NDI4MDAwLCJpZCI6IjY3ZWE3M2QwYWQ2OTY3ZDU3ZGQ0Nzg3OSIsImVtYWlsIjoic3N1bGltYW5AYXNhbHRlY2guY29tIiwiaWF0IjoxNzQzOTc3NDI4LCJleHAiOjE3NDM5ODEwMjh9.3sHM5NIMT6x2DetZzuCZY9M_-62XQWDI0Bk3lYHhc3o",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"auth",
+								"isActiveToken",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRlIjoxNzQzOTc3NDI4MDAwLCJpZCI6IjY3ZWE3M2QwYWQ2OTY3ZDU3ZGQ0Nzg3OSIsImVtYWlsIjoic3N1bGltYW5AYXNhbHRlY2guY29tIiwiaWF0IjoxNzQzOTc3NDI4LCJleHAiOjE3NDM5ODEwMjh9.3sHM5NIMT6x2DetZzuCZY9M_-62XQWDI0Bk3lYHhc3o"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Email Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/auth/verifyEmailRequest",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"auth",
+								"verifyEmailRequest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRlIjoxNzQ0NDUyMTAzNDQzLCJpZCI6IjY3ZmEzOWZiNGZlNzg5NjVkNDhlZjc3MyIsImlhdCI6MTc0NDQ1MjEwMywiZXhwIjoxNzQ0NDU1NzAzfQ.mQjl5mhyMiOpUPark8I3x_1_W65DtHd1t3yNGZCWoLs\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_URL}}/auth/verifyEmail",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"auth",
+								"verifyEmail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currentPassword\": \"S00000000@s\",\r\n    \"newPassword\": \"Safwat@2002\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_URL}}/auth/changePassword",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"auth",
+								"changePassword"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Properties",
+			"item": [
+				{
+					"name": "Add Property",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "AL-hamra Palace",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "this is one of top chalets Located In Bal'a On Top Of Rashin Mountain this is one of top chalets Located In Bal'a On Top Of Rashin Mountain",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "67ec05b27cc6893aa16e5cd6",
+									"type": "text"
+								},
+								{
+									"key": "region",
+									"value": "680a711cdf1b147cf4a61658",
+									"type": "text"
+								},
+								{
+									"key": "street",
+									"value": "West Neightborhood",
+									"type": "text"
+								},
+								{
+									"key": "location",
+									"value": "{\"lng\": 35.814500, \"lat\":32.452939}",
+									"type": "text"
+								},
+								{
+									"key": "rentFee",
+									"value": "800",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "Point",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "thumbnail",
+									"type": "file",
+									"src": "/D:/ارشيف الهاتف/ارشيف صور تونس/تونس الفترة الوسطى/IMG-20240826-WA0027.jpg"
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": [
+										"/D:/ارشيف الهاتف/ارشيف صور تونس/تونس الفترة الوسطى/IMG-20240827-WA0033.jpg",
+										"/D:/ارشيف الهاتف/ارشيف صور تونس/تونس الفترة الوسطى/IMG-20240910-WA0002.jpg",
+										"/D:/ارشيف الهاتف/ارشيف صور تونس/تونس الفترة الوسطى/IMG-20240910-WA0004.jpg",
+										"/D:/ارشيف الهاتف/ارشيف صور تونس/تونس الفترة الوسطى/IMG-20240910-WA0014.jpg",
+										"/D:/ارشيف الهاتف/ارشيف صور تونس/تونس الفترة الوسطى/IMG20240907181517.jpg",
+										"/D:/ارشيف الهاتف/ارشيف صور تونس/تونس الفترة الوسطى/IMG20240910175720.jpg",
+										"/D:/ارشيف الهاتف/ارشيف صور تونس/تونس الفترة الوسطى/IMG20240910175733.jpg",
+										"/D:/ارشيف الهاتف/ارشيف صور تونس/تونس الفترة الوسطى/IMG20240910184432.jpg",
+										"/D:/ارشيف الهاتف/ارشيف صور تونس/تونس الفترة الوسطى/IMG20240910184434.jpg",
+										"/D:/ارشيف الهاتف/ارشيف صور تونس/تونس الفترة الوسطى/IMG20240910203446.jpg"
+									]
+								},
+								{
+									"key": "amenities",
+									"value": "[\"6807f21e7f48a0435ef49bbd\", \"6807f2567f48a0435ef49bbf\", \"6807f2827f48a0435ef49bc3\",\"6807f2b77f48a0435ef49bc5\", \"6807f2677f48a0435ef49bc1\"]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_URL}}api/properties/addProperty",
+							"host": [
+								"{{base_URL}}api"
+							],
+							"path": [
+								"properties",
+								"addProperty"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Property Info",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "AL-Hamra Palace Updated",
+									"type": "text"
+								},
+								{
+									"key": "removeImages",
+									"value": "[\"/images/properties/1743494321087.JPG\", \"/images/properties/1743494321156.JPG\", \"/images/properties/1743498606976.JPG\"]",
+									"type": "text"
+								},
+								{
+									"key": "thumbnailURL",
+									"type": "file",
+									"src": "/D:/ارشيف الهاتف/ارشيف صور تونس/marsa/IMG_0526.JPG",
+									"disabled": true
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": "/D:/ارشيف الهاتف/ارشيف صور تونس/marsa/IMG_0427.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_URL}}/properties/67eb9cb19d4475dfc796a506",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"properties",
+								"67eb9cb19d4475dfc796a506"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Property",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/properties/67eafeebf744b204032ad6ae",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"properties",
+								"67eafeebf744b204032ad6ae"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Properties With Filters And Pagination",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/properties",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"properties"
+							],
+							"query": [
+								{
+									"key": "amenities",
+									"value": "6807f21e7f48a0435ef49bbd",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Property Details By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/properties/67eb9cb19d4475dfc796a506",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"properties",
+								"67eb9cb19d4475dfc796a506"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get not Available Dates",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/properties/availablity/680b8dcb9ca773628387f708",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"properties",
+								"availablity",
+								"680b8dcb9ca773628387f708"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Host Properties",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/properties/host/all",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"properties",
+								"host",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activate/DeActivate Property",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/properties/activation/:propertyId",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"properties",
+								"activation",
+								":propertyId"
+							],
+							"variable": [
+								{
+									"key": "propertyId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Properties (Admin)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userPoints\": 100,\r\n    \"hostPoints\": 100,\r\n    \"status\": \"finished\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/properties/admin/all?page=2",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"properties",
+								"admin",
+								"all"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle Suspension (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Biet Lied",
+									"type": "text"
+								},
+								{
+									"key": "coverPictureURL",
+									"type": "file",
+									"src": "/D:/ارشيف الهاتف/ارشيف صور تونس/marsa/IMG_0406.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_URL}}/properties/admin/suspend/:propertyId",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"properties",
+								"admin",
+								"suspend",
+								":propertyId"
+							],
+							"variable": [
+								{
+									"key": "propertyId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cities",
+			"item": [
+				{
+					"name": "Create New City",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Jersualem",
+									"type": "text"
+								},
+								{
+									"key": "coverPicture",
+									"type": "file",
+									"src": "/D:/ارشيف الهاتف/ارشيف صور تونس/marsa/IMG_0429.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_URL}}/cities",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"cities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update City",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Tulkareem",
+									"type": "text"
+								},
+								{
+									"key": "coverPicture",
+									"type": "file",
+									"src": "/D:/ارشيف الهاتف/ارشيف صور تونس/marsa/IMG_0420.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_URL}}/cities/67ec076b0720735f2096fd5a",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"cities",
+								"67ec076b0720735f2096fd5a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete A City",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/cities/67ec0711f5678787a30e6279",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"cities",
+								"67ec0711f5678787a30e6279"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Cities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/cities",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"cities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single City Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/cities/67ec05b27cc6893aa16e5cd6",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"cities",
+								"67ec05b27cc6893aa16e5cd6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Top N Cities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/cities/topCities/5",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"cities",
+								"topCities",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Regions",
+			"item": [
+				{
+					"name": "Create New Region",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Atara",
+									"type": "text"
+								},
+								{
+									"key": "cityId",
+									"value": "67ec056b2190418f6c324811",
+									"type": "text"
+								},
+								{
+									"key": "coverPictureURL",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_URL}}/regions",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"regions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Regions With cities belongs to",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/regions",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"regions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Region",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Biet Lied",
+									"type": "text"
+								},
+								{
+									"key": "coverPictureURL",
+									"type": "file",
+									"src": "/D:/ارشيف الهاتف/ارشيف صور تونس/marsa/IMG_0406.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_URL}}/regions/67ed085f7888170765e0a4c2",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"regions",
+								"67ed085f7888170765e0a4c2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete A Region",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/regions/680a706bdf1b147cf4a61642",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"regions",
+								"680a706bdf1b147cf4a61642"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Regions By City Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/regions/all/67ec05b27cc6893aa16e5cd6",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"regions",
+								"all",
+								"67ec05b27cc6893aa16e5cd6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Amenities",
+			"item": [
+				{
+					"name": "Create New Amenity",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Free WIFI",
+									"type": "text"
+								},
+								{
+									"key": "icon",
+									"description": "// preferred svg file 24px width & height",
+									"type": "file",
+									"src": "/C:/Users/safwa/Downloads/wifi.svg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_URL}}/amenities/",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"amenities",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Amenity",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Central AC",
+									"type": "text"
+								},
+								{
+									"key": "icon",
+									"type": "file",
+									"src": "/D:/ارشيف الهاتف/ارشيف صور تونس/marsa/IMG_0431.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_URL}}/amenities/67ed308ea17c3fef952939f8",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"amenities",
+								"67ed308ea17c3fef952939f8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Amenity",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/amenities/67ed3078734cae7db3ef5fe4",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"amenities",
+								"67ed3078734cae7db3ef5fe4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Amenities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/amenities",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"amenities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Amenity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/amenities/67ed3078734cae7db3ef5fe4",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"amenities",
+								"67ed3078734cae7db3ef5fe4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "Create New Review For Finished Reservation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"reservationId\":\"68080fc04f946352abe476d0\",    \r\n    \"comment\": \"Recommended very beatifull but its hard to get to, and its between buildings so its not comfortable at night\",\r\n    \"rating\":\"4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_URL}}/reviews/",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"reviews",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Review By Its ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"comment\": \"Thank You So Much\",\r\n    \"review\": \"4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_URL}}/reviews/67f04416d1aa48b2dd0fee01",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"reviews",
+								"67f04416d1aa48b2dd0fee01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete A Review",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/reviews/67f04416d1aa48b2dd0fee01",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"reviews",
+								"67f04416d1aa48b2dd0fee01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Reviews On Specific Property",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/reviews/propertyReviews/67eafe2e6d5b12c298567681?page=2",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"reviews",
+								"propertyReviews",
+								"67eafe2e6d5b12c298567681"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get A Review related to specified reservation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/reviews/67ed711a4c1f544fdf31005e",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"reviews",
+								"67ed711a4c1f544fdf31005e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "WishList",
+			"item": [
+				{
+					"name": "Add/Remove Item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/wishlist/680d025312722b88ddc1bd52",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"wishlist",
+								"680d025312722b88ddc1bd52"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get WishList Content",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/wishlist",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"wishlist"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check if the Property is in the wishlist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/wishlist/isFavorite/6807a111c7b7d581ce899ac2",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"wishlist",
+								"isFavorite",
+								"6807a111c7b7d581ce899ac2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count user wishlist items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/wishlist/count",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"wishlist",
+								"count"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SocketIO",
+			"item": []
+		},
+		{
+			"name": "Notifications",
+			"item": [
+				{
+					"name": "Get User Notifications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/notifications/all?page=2",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"notifications",
+								"all"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set A Notification As Read",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/notifications/markAsRead/67f93a9f06e009cb784c52f8",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"notifications",
+								"markAsRead",
+								"67f93a9f06e009cb784c52f8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Unread Notifications Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/notifications/unreadCount",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"notifications",
+								"unreadCount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete A Notification Only Admin Allowed to do this",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/notifications/67f90d2d44b7d274b6da0764",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"notifications",
+								"67f90d2d44b7d274b6da0764"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Host Requests & Admin",
+			"item": [
+				{
+					"name": "Get Host Requests",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Biet Lied",
+									"type": "text"
+								},
+								{
+									"key": "coverPictureURL",
+									"type": "file",
+									"src": "/D:/ارشيف الهاتف/ارشيف صور تونس/marsa/IMG_0406.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_URL}}/hostRequests",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"hostRequests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Host Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Biet Lied",
+									"type": "text"
+								},
+								{
+									"key": "coverPictureURL",
+									"type": "file",
+									"src": "/D:/ارشيف الهاتف/ارشيف صور تونس/marsa/IMG_0406.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_URL}}/hostRequests/approve/1234adf23",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"hostRequests",
+								"approve",
+								"1234adf23"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reject Host Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Biet Lied",
+									"type": "text"
+								},
+								{
+									"key": "coverPictureURL",
+									"type": "file",
+									"src": "/D:/ارشيف الهاتف/ارشيف صور تونس/marsa/IMG_0406.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_URL}}/hostRequests/reject/1234",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"hostRequests",
+								"reject",
+								"1234"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dashboard Overview",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Biet Lied",
+									"type": "text"
+								},
+								{
+									"key": "coverPictureURL",
+									"type": "file",
+									"src": "/D:/ارشيف الهاتف/ارشيف صور تونس/marsa/IMG_0406.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_URL}}/admin/dashboard",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"admin",
+								"dashboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Images Backup",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_URL}}/admin/backup",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"admin",
+								"backup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
